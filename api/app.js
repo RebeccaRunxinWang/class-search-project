@@ -46,10 +46,24 @@ const mysql = require('mysql');
 const con = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: "316project"
+  password: "316project",
+  database: "project"
 });
-
+var data;
 con.connect(function(err) {
   if (err) throw err;
   console.log("Connected!");
+  let sql = `Select * from course 
+  Order by average_teaching_quality DESC;`;
+  con.query(sql, function (err, result) {
+    if (err) throw err;
+    console.log("The best class:");
+    data = result[0];
+    console.log(result[0]);
+  });
 });
+
+app.post('/try', function(req, res) {
+  results= data.course_number;
+  res.send(JSON.stringify(results));
+}); 
