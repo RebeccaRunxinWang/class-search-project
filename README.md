@@ -1,0 +1,4 @@
+316 Project Milestone 2
+====
+
+We got the original dataset from a student organization in the form of an excel sheet after acquiring their consent. However, the data in the original database was not comprehensive enough for our database design, so we added new data such as professor emails, professor links, etc. manually to fulfill the requirements of our database design. Also, to make data in the database most up-to-date, we not only filled the database with our own reviews but also encouraged our friends to add reviews for us. Finally we converted the data in the excel into insert statements in sql that fill out the six tables we designed and satisfy all the constraints.

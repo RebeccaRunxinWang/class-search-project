@@ -1,0 +1,6 @@
+Members: Rebecca Wang, Daniel Tao, James Pan, Xin Wang, Beini Wang
+Rebecca Wang: Researched and compared the options for backend and frontend. Learned nodeJS and react and coded functionalities of backend/middleware, connecting Mysql with Node. 
+Daniel Tao: Researched and compared different options for the platform. Contributed to the design and implementation of use interface and prepared the platform for the final product.
+James Pan: Led the coding in SQL including inputing testing data into SQL, building the queries and modifying the dataset to better fit the project objectives
+Xin Wang: Improved the data set with additonal data and reformatted certain attributes. Organized team meetings and managed the workstreams. Contributed to the progess report and other documents. 
+Beini Wang: Collected additional data and reformatted data in the database based on the feedback on the previous milestone. Contributed to the progress report and documents.
