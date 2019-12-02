@@ -1,22 +1,12 @@
 import React from 'react';
 import './App.css';
 import Background from "./image/background.jpg"
+import SearchIcon from "@material-ui/icons/Search";
+import EnhancedTable from "./EnhancedTable"
 
 
 var result = 'select a.CourseName from dummy as a, (select max(teaching_quality) as tq from dummy) as b where a.teaching_quality = b.tq';
 
-var question_style = {
-  backgroundColor: 'red'
-};
-
-var container_style = {
-  height: '100vh',
-  backgroundColor: 'black'
-};
-
-var header_style = {
-  backgroundColor: 'green'
-}
 
 
 
@@ -24,23 +14,21 @@ var header_style = {
 class App extends React.Component{
     render(){
         return (
-          <div class="container" style={container_style}>
-            <div class= "header" style = {header_style}>
-              <div class= "box-field">
-                <img src={require("./image/background.jpg")}/>
+          <div class="container">
+            <Header_bar/>
+            <div class="main">
+              <Search_bar/>
+              <div class="question">
+                  <h3 style={{"color":"blue"}}>
+                  What do you care most?
+                  </h3>
+                  <Questions/>
               </div>
-              <div class= "box-field">
-                <h2>
-                  Jun Yang Gang
-                </h2>
+              <div class="wrapper">
+                <div class="table">
+                  <EnhancedTable/>
+                </div>
               </div>
-            </div>
-
-            <div class="question" style={question_style}>
-            <h3 style={{"color":"blue"}}>
-            What do you care most?
-            </h3>
-            <Questions/>
             </div>
           </div>
         );
@@ -79,6 +67,7 @@ class Questions extends React.Component {
         );
     }
 }
+
 class Best_teaching_quality extends React.Component {
   constructor(props) {
     super(props);
@@ -96,15 +85,49 @@ componentWillMount() {
         return <div>The class with beest teaching quality is {this.state.apiResponse} </div>
     }
 }
+
 class Best_professor extends React.Component {
     render(){
         return <div>GOAT Prof</div>
     }
 }
+
 class Most_fun extends React.Component {
     render(){
         return <div>Most fun class</div>
     }
+}
+
+class Search_bar extends React.Component{
+    render(){
+      return (
+        <div class="search_wrapper">
+          <div class="search">
+            <input type="text" class="searchTerm" placeholder="What class are you interested in?"/>
+            <button type="submit" class="searchButton">
+              <SearchIcon/>
+            </button>
+           </div>
+       </div>
+      );
+    }
+}
+
+class Header_bar extends React.Component{
+  render(){
+    return (
+      <div class="header_bar">
+        <div class="box-field">
+          <h3>
+            <a href="./index.js">
+              HOME
+            </a>
+          </h3>
+        </div>
+      </div>
+    );
+  }
+
 }
 
 function highest_teaching_quality(){

@@ -1,3 +1,4 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans);
 .App {
   text-align: center;
 }
@@ -20,10 +21,82 @@
 .App-link {
   color: #09d3ac;
 }
+
 .box-field {
   width: 40%;
   display: inline-block;
-  padding-bottom:  50px;
-  padding-top: 20px;
-  padding-left: 10px;
+  padding-left: 50px;
+}
+
+.header_bar{
+  height: 65px;
+  box-shadow: 10px 2px 5px #888888;
+}
+
+a{
+  color: black;
+  text-decoration: none;
+  transition: color 0.3s ease-in-out;
+}
+
+a:hover{
+  color:hotpink;
+}
+
+.main{
+
+  background: white;
+  height:500px;
+  width: 100%;
+  margin-top: 10px;
+  text-align: center;
+}
+
+.search_wrapper{
+  display: inline-block;
+  width: 50%
+}
+
+.search {
+  text-align: center;
+  width: 100%;
+  position: relative;
+  display: flex;
+}
+
+.searchTerm {
+  width: 100%;
+  border: 3px solid #00B4CC;
+  border-right: none;
+  padding: 5px;
+  height: 20px;
+  border-radius: 5px 0 0 5px;
+  outline: none;
+  display: inline-block;
+  color: #9DBFAF;
+}
+
+.searchTerm:focus{
+  color: #00B4CC;
+}
+
+.searchButton {
+  width: 40px;
+  height: 36px;
+  border: 1px solid #00B4CC;
+  background: #00B4CC;
+  display: inline-block;
+  color: #fff;
+  border-radius: 0 5px 5px 0;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.wrapper{
+  display: inline-block;
+  width: 60%;
+}
+.table{
+  width:100%;
+  text-align: center;
 }
