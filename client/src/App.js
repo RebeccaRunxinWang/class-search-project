@@ -9,9 +9,21 @@ var result = 'select a.CourseName from dummy as a, (select max(teaching_quality)
 
 
 
-
-
 class App extends React.Component{
+
+  constructor(props) {
+    super(props);
+    this.state = { apiResponse: "" };
+  }
+  callAPI() {
+    fetch("http://localhost:9000/testAPI")
+    .then(res => res.text())
+    .then(res => this.setState({ apiResponse: res }));
+  }
+  componentWillMount() {
+    this.callAPI();
+  }
+  
     render(){
         return (
           <div class="container">
@@ -26,7 +38,7 @@ class App extends React.Component{
               </div>
               <div class="wrapper">
                 <div class="table">
-                  <EnhancedTable/>
+                  <EnhancedTable data={this.state.apiResponse}/>
                 </div>
               </div>
             </div>
@@ -69,20 +81,9 @@ class Questions extends React.Component {
 }
 
 class Best_teaching_quality extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { apiResponse: "" };
-}
-callAPI() {
-  fetch("http://localhost:9000/testAPI")
-      .then(res => res.text())
-      .then(res => this.setState({ apiResponse: res }));
-}
-componentWillMount() {
-    this.callAPI();
-}
+
     render(){
-        return <div>The class with beest teaching quality is {this.state.apiResponse} </div>
+        return <div>The class with beest teaching quality is </div>
     }
 }
 
@@ -102,12 +103,14 @@ class Search_bar extends React.Component{
     render(){
       return (
         <div class="search_wrapper">
+          <form id="formA" action="http://localhost:9000/testAPI" method="get">
           <div class="search">
-            <input type="text" class="searchTerm" placeholder="What class are you interested in?"/>
+            <input type="text" class="searchTerm" name="searchTerm" placeholder="What class are you interested in?"/>
             <button type="submit" class="searchButton">
               <SearchIcon/>
             </button>
            </div>
+           </form>
        </div>
       );
     }
