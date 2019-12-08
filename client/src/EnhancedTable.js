@@ -12,15 +12,15 @@ import Paper from "@material-ui/core/Paper";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
 
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
+function createData( difficulty, teaching_quality, class_number, name,attribute) {
+  return { name,  difficulty, teaching_quality, class_number, attribute};
 }
 
-const rows = [
-  createData("Cupcake", 305, 3.7, 67, 4.3),
-  createData("Donut", 452, 25.0, 51, 4.9),
-  createData("Eclair", 262, 16.0, 24, 6.0)
-];
+// const rows = [
+// //  createData("Cupcake", 305, 3.7, 67, 4.3),
+// //  createData("Donut", 452, 25.0, 51, 4.9),
+// //  createData("Eclair", 262, 16.0, 24, 6.0)
+// ];
 
 function desc(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -134,13 +134,18 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function EnhancedTable() {
+export default function EnhancedTable(datas) {
   const classes = useStyles();
   const [order, setOrder] = React.useState("asc");
   const [orderBy, setOrderBy] = React.useState("calories");
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
+
+  var rows = [];
+  for (var i=0; i< datas.length; i ++){
+    rows.push(datas[i]);
+  }
 
   const handleRequestSort = (event, property) => {
     const isDesc = orderBy === property && order === "desc";
@@ -163,6 +168,7 @@ export default function EnhancedTable() {
 
   const emptyRows =
     rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
+
 
   return (
     <div className={classes.root}>
