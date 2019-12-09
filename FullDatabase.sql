@@ -1,3 +1,4 @@
+Use FinalProduction;
 Create table professor (
 Name varchar(255) not null,
 Department varchar(255) not null,
@@ -123,7 +124,7 @@ INSERT INTO course VALUES
     (2.33,2.17,'COMPSCI 216','Everything Data','Computer Science'),
     (3.38,3.5,'COMPSCI 230','Discrete Math for Computer Science','Computer Science'),
     (3.83,3.0,'COMPSCI 250','Computer Architecture','Electrical and Computer Engineering'),
-    (2.89,4.21,'COMPSCI 316','Introduction to Database Systems','Computer Science'),
+    (2.89,4.9,'COMPSCI 316','Introduction to Database Systems','Computer Science'),
     (4.5,3.75,'COMPSCI 330','Introduction to the Design and Analysis of Algorithms','Computer Science'),
     (4.0,3.0,'COMPSCI 571','Machine Learning','Computer Science'),
     (2.5,4.0,'COMPSCI 590','Computer Security','Computer Science'),

@@ -56,10 +56,10 @@ const headCells = [
     disablePadding: true,
     label: "course name"
   },
-  { id: "difficulty", numeric: true, disablePadding: false, label: "Calories" },
-  { id: "teaching quality", numeric: true, disablePadding: false, label: "Fat (g)" },
-  { id: "course number", numeric: true, disablePadding: false, label: "Carbs (g)" },
-  { id: "department", numeric: true, disablePadding: false, label: "Protein (g)" }
+  { id: "difficulty", numeric: true, disablePadding: false, label: "difficulty" },
+  { id: "teaching quality", numeric: true, disablePadding: false, label: "teaching quality" },
+  { id: "course number", numeric: true, disablePadding: false, label: "course number" },
+  { id: "department", numeric: true, disablePadding: false, label: "department" }
 ];
 
 function EnhancedTableHead(props) {
@@ -147,7 +147,7 @@ class App extends React.Component{
 
   constructor(props) {
     super(props);
-    this.state = { apiResponse: [] };
+    this.state = { apiResponse: "" };
   }
   
 
@@ -168,19 +168,126 @@ class App extends React.Component{
       }
     });
     console.log(rows);
-    this.setState({ apiResponse: rows });
-    console.log(this.state.apiResponse);
+    this.setState({ apiResponse: "ok" });
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.callAPI();
   }
+
+  EnhancedTable() {
+    const classes = useStyles();
+    const [order, setOrder] = React.useState("asc");
+    const [orderBy, setOrderBy] = React.useState("calories");
+    const [page, setPage] = React.useState(0);
+    const [dense, setDense] = React.useState(false);
+    const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  
+    const handleRequestSort = (event, property) => {
+      const isDesc = orderBy === property && order === "desc";
+      setOrder(isDesc ? "asc" : "desc");
+      setOrderBy(property);
+    };
+  
+    const handleChangePage = (event, newPage) => {
+      setPage(newPage);
+    };
+  
+    const handleChangeRowsPerPage = event => {
+      setRowsPerPage(parseInt(event.target.value, 10));
+      setPage(0);
+    };
+  
+    const handleChangeDense = event => {
+      setDense(event.target.checked);
+    };
+    console.log("row 22"+JSON.stringify(rows));
+    const emptyRows =
+      rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
+  
+  
+    return (
+      <div className={classes.root}>
+        <Paper className={classes.paper}>
+          <div className={classes.tableWrapper}>
+            <Table
+              className={classes.table}
+              aria-labelledby="tableTitle"
+              size={dense ? "small" : "medium"}
+              aria-label="enhanced table"
+            >
+              <EnhancedTableHead
+                classes={classes}
+                order={order}
+                orderBy={orderBy}
+                onRequestSort={handleRequestSort}
+                rowCount={rows.length}
+              />
+              <TableBody>
+                {stableSort(rows, getSorting(order, orderBy))
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((row, index) => {
+                    const labelId = `enhanced-table-checkbox-${index}`;
+  
+                    return (
+                      <TableRow
+                        hover
+                        tabIndex={-1}
+                        key={row.name}
+                      >
+                        <TableCell padding="checkbox" />
+                        <TableCell
+                          component="th"
+                          id={labelId}
+                          scope="row"
+                          padding="none"
+                        >
+                          {row.name}
+                        </TableCell>
+                        <TableCell align="right">{row.difficulty}</TableCell>
+                        <TableCell align="right">{row.teaching_quality}</TableCell>
+                        <TableCell align="right">{row.course_number}</TableCell>
+                        <TableCell align="right">{row.department}</TableCell>
+                      </TableRow>
+                    );
+                  })}
+                {emptyRows > 0 && (
+                  <TableRow style={{ height: (dense ? 33 : 53) * emptyRows }}>
+                    <TableCell colSpan={6} />
+                  </TableRow>
+                )}
+              </TableBody>
+            </Table>
+          </div>
+          <TablePagination
+            rowsPerPageOptions={[5, 10, 25]}
+            component="div"
+            count={rows.length}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            backIconButtonProps={{
+              "aria-label": "previous page"
+            }}
+            nextIconButtonProps={{
+              "aria-label": "next page"
+            }}
+            onChangePage={handleChangePage}
+            onChangeRowsPerPage={handleChangeRowsPerPage}
+          />
+        </Paper>
+        <FormControlLabel
+          control={<Switch checked={dense} onChange={handleChangeDense} />}
+          label="Dense padding"
+        />
+      </div>
+    );
+}
 
     render(){
     console.log("rerender");
         return (
           <div class="container">
-             <iframe style={{'visible': 'hidden'}} name="hiddenFrame" class="hide"></iframe>
+             <iframe style={{'width':'0' ,'height':'0', 'visible': 'hidden'}} name="hiddenFrame" class="hide"></iframe>
             <Header_bar/>
             <div class="main">
               <Search_bar/>
@@ -215,7 +322,6 @@ class Questions extends React.Component {
     _renderSubComp(){
         switch(this.state.render){
             case 'teaching_quality': return <Best_teaching_quality/>
-            case 'Professor' : return <Best_professor/>
             case 'fun_level': return <Most_fun/>
         }
     }
@@ -225,7 +331,6 @@ class Questions extends React.Component {
             <div className="App">
                 <ul style={{display: 'inline'}}>
                     <li onClick={this.handleClick.bind(this, 'teaching_quality')}>Teaching quality</li>
-                    <li onClick={this.handleClick.bind(this, 'Professor')}>Professor</li>
                     <li onClick={this.handleClick.bind(this, 'fun_level')}>Fun</li>
                 </ul>
                 {this._renderSubComp()}
@@ -237,19 +342,14 @@ class Questions extends React.Component {
 class Best_teaching_quality extends React.Component {
 
     render(){
-        return <div>The class with beest teaching quality is </div>
+        return <div>The class with beest teaching quality is {rows[0].name} </div>
     }
 }
 
-class Best_professor extends React.Component {
-    render(){
-        return <div>GOAT Prof</div>
-    }
-}
 
 class Most_fun extends React.Component {
     render(){
-        return <div>Most fun class</div>
+        return <div>Most fun class {rows[rows.length-1].name} </div>
     }
 }
 
@@ -363,10 +463,10 @@ function EnhancedTable() {
                             >
                               {row.name}
                             </TableCell>
-                            <TableCell align="right">{row.calories}</TableCell>
-                            <TableCell align="right">{row.fat}</TableCell>
-                            <TableCell align="right">{row.carbs}</TableCell>
-                            <TableCell align="right">{row.protein}</TableCell>
+                            <TableCell align="right">{row.difficulty}</TableCell>
+                            <TableCell align="right">{row.teaching_quality}</TableCell>
+                            <TableCell align="right">{row.course_number}</TableCell>
+                            <TableCell align="right">{row.department}</TableCell>
                           </TableRow>
                         );
                       })}
