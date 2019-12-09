@@ -10,9 +10,9 @@ const con = mysql.createConnection({
   database: "FinalProduction"
 });
 var data;
+var out;
 router.use('/',function(req, res) {
   data = req.query.searchTerm;
-  console.log("DATA"+data);
   con.connect(function(err) {
   console.log("Connected!");
   // let sql = `Select * from course Order by average_teaching_quality DESC;`;
@@ -23,12 +23,9 @@ router.use('/',function(req, res) {
     if (err) throw err;
     console.log("query result:");
     out = result;
-    console.log(result);
+    //console.log(result);
   });
-});
-});
-
-router.get("/", function(req, res, next) {
+  });
   console.log(out);
   res.send(out);
 });
